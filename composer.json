@@ -1,0 +1,26 @@
+{
+  "name": "microparts/logs-php",
+  "authors": [
+    {
+      "name": "roquie",
+      "email": "roquie0@gmail.com"
+    }
+  ],
+  "require": {
+    "monolog/monolog": "^1.24"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^4.2",
+    "phpunit/phpunit": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Microparts\\Logger\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Microparts\\Logger\\Tests\\": "tests/"
+    }
+  }
+}
