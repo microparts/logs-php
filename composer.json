@@ -1,5 +1,8 @@
 {
   "name": "microparts/logs-php",
+  "description": "Simple pre-configured Monolog wrapper. Without fucking brackets.",
+  "type": "library",
+  "license": "MIT",
   "authors": [
     {
       "name": "roquie",
