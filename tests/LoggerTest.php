@@ -3,7 +3,8 @@
 namespace Microparts\Logger\Tests;
 
 use Microparts\Logger\Logger;
-use Monolog\Handler\NullHandler;
+use Monolog\Handler\AbstractHandler;
+use Monolog\Handler\HandlerInterface;
 use PHPUnit\Framework\TestCase;
 
 
@@ -17,8 +18,12 @@ class LoggerTest extends TestCase
 
         $log = new Logger();
         $log->addErrorLogHandler();
-        $log->addHandler(function (int $level) {
-            return new NullHandler($level);
+        $log->addHandler(function (): HandlerInterface {
+            return new class extends AbstractHandler implements HandlerInterface {
+                public function handle(array $record) {
+                    fwrite(STDOUT, 'EXAMPLE FOR TESTS Write to stdout');
+                }
+            };
         });
         $log->register();
 
