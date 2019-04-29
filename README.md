@@ -1,6 +1,8 @@
 Simple pre-configured Monolog wrapper
 -------------------------------------
 
+[![CircleCI](https://circleci.com/gh/microparts/logs-php.svg?style=svg)](https://circleci.com/gh/microparts/logs-php)
+
 I create this library with one target, — I'm sick of always copies 
 and paste same code to any of my microservices with logs. 
 
@@ -19,6 +21,12 @@ Example, how this wrapper preset the logs:
 This is a normal view and without fucking brackets of Monolog's. Okay, I'm hate it too, how it use?
 
 ## Usage
+
+0) Install library through `composer`:
+
+```bash
+composer require microparts/logs-php
+```
 
 1) Basic example for most cases will do like as:
 
