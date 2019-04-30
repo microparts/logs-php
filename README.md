@@ -6,7 +6,7 @@ Simple pre-configured Monolog wrapper
 I create this library with one target, — I'm sick of always copies 
 and paste same code to any of my microservices with logs. 
 
-This wrapper solves one problem with logs. And her name, — fucking brackets -> [] [] [] [].
+This wrapper solves one problem with logs. And it name, — fucking brackets -> [] [] [] [].
 
 Example, how this wrapper preset the logs:
 
