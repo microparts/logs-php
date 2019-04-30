@@ -6,6 +6,7 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger as Monolog;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 final class Logger
 {
@@ -37,9 +38,9 @@ final class Logger
      * Logger constructor.
      *
      * @param string $channel
-     * @param int $level
+     * @param string $level
      */
-    public function __construct(string $channel = 'App', int $level = Monolog::INFO)
+    public function __construct(string $channel = 'App', string $level = LogLevel::INFO)
     {
         $this->channel = $channel;
         $this->level   = $level;
@@ -51,10 +52,10 @@ final class Logger
      * Return default and most-usable logger instance.
      *
      * @param string $channel
-     * @param int $level
+     * @param string $level
      * @return LoggerInterface
      */
-    public static function new(string $channel = 'App', int $level = Monolog::INFO): LoggerInterface
+    public static function new(string $channel = 'App', string $level = LogLevel::INFO): LoggerInterface
     {
         $logger = new Logger($channel, $level);
         $logger->addErrorLogHandler();
@@ -95,7 +96,7 @@ final class Logger
      */
     public function addErrorLogHandler(): void
     {
-        $this->addHandler(function (int $level) {
+        $this->addHandler(function (string $level) {
             $formatter = new LineFormatter(self::FORMAT);
             $formatter->ignoreEmptyContextAndExtra();
 

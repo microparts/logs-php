@@ -65,9 +65,9 @@ It also very simple.
 
 ```php
 use Microparts\Logger\Logger;
-use Monolog\Logger as Monolog;
+use Psr\Log\LogLevel;
 
-$log = new Logger('Haku', Monolog::DEBUG); // enabled debug mode and set the channel name
+$log = new Logger('Haku', LogLevel::DEBUG); // enabled debug mode and set the channel name
 $log->addErrorLogHandler();
 $log->register();
 
@@ -80,11 +80,11 @@ $log->getMonolog()->info('Let\'s fly!');
 use Microparts\Logger\Logger;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\NullHandler;
-use Monolog\Logger as Monolog;
+use Psr\Log\LogLevel;
 
-$log = new Logger('Sen', Monolog::DEBUG); // enabled debug mode and set the channel name
+$log = new Logger('Sen', LogLevel::DEBUG); // enabled debug mode and set the channel name
 $log->addErrorLogHandler();
-$log->addHandler(function (int $level): HandlerInterface {
+$log->addHandler(function (string $level): HandlerInterface {
     return new NullHandler($level);
 });
 
