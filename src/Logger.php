@@ -31,18 +31,18 @@ final class Logger
     /**
      * @var bool
      */
-    private $debug;
+    private $level;
 
     /**
      * Logger constructor.
      *
      * @param string $channel
-     * @param bool $debug
+     * @param int $level
      */
-    public function __construct(string $channel = 'App', bool $debug = false)
+    public function __construct(string $channel = 'App', int $level = Monolog::INFO)
     {
         $this->channel = $channel;
-        $this->debug   = $debug;
+        $this->level   = $level;
 
         $this->monolog = new Monolog($channel);
     }
@@ -51,12 +51,12 @@ final class Logger
      * Return default and most-usable logger instance.
      *
      * @param string $channel
-     * @param bool $debug
+     * @param int $level
      * @return LoggerInterface
      */
-    public static function new(string $channel = 'App', bool $debug = false): LoggerInterface
+    public static function new(string $channel = 'App', int $level = Monolog::INFO): LoggerInterface
     {
-        $logger = new Logger($channel, $debug);
+        $logger = new Logger($channel, $level);
         $logger->addErrorLogHandler();
 
         return $logger->register();
@@ -83,7 +83,7 @@ final class Logger
     public function register(): LoggerInterface
     {
         foreach ($this->handlers as $handler) {
-            $this->monolog->pushHandler($handler($this->chooseLogLevel()));
+            $this->monolog->pushHandler($handler($this->level));
         }
 
         return $this->monolog;
@@ -104,14 +104,6 @@ final class Logger
 
             return $handler;
         });
-    }
-
-    /**
-     * @return int
-     */
-    private function chooseLogLevel(): int
-    {
-        return $this->debug ? Monolog::DEBUG : Monolog::INFO;
     }
 
     /**
