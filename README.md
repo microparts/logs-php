@@ -2,6 +2,7 @@ Simple pre-configured Monolog wrapper
 -------------------------------------
 
 [![CircleCI](https://circleci.com/gh/microparts/logs-php.svg?style=svg)](https://circleci.com/gh/microparts/logs-php)
+[![codecov](https://codecov.io/gh/microparts/logs-php/branch/master/graph/badge.svg)](https://codecov.io/gh/microparts/logs-php)
 
 I create this library with one target, — I'm sick of always copies 
 and paste same code to any of my microservices with logs. 
