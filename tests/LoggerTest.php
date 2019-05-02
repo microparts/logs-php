@@ -32,4 +32,15 @@ class LoggerTest extends TestCase
         $string = file_get_contents(sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
         $this->assertStringEndsWith('App.INFO: test how simple logger wrapper works', trim($string));
     }
+
+    public function testHowWorksStaticMethod()
+    {
+        ini_set('error_log', sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
+
+        $log = Logger::new();
+        $log->info('test how simple logger wrapper works');
+
+        $string = file_get_contents(sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
+        $this->assertStringEndsWith('App.INFO: test how simple logger wrapper works', trim($string));
+    }
 }
