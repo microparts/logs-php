@@ -9,7 +9,7 @@ and paste same code to any of my microservices with logs.
 
 This wrapper solves one problem with logs. And it name, — fucking brackets -> [] [] [] [].
 
-Example, how this wrapper preset the logs:
+Example, how this wrapper present the logs:
 
 ```bash
 [2019-04-29 21:39:52] Server.INFO: CONFIG_PATH = ./configuration  
