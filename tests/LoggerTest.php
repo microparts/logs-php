@@ -10,11 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 class LoggerTest extends TestCase
 {
-    private const ERROR_LOG_FILENAME = '/test_logger_error_log.txt';
-
     public function testHowLoggerWorks()
     {
-        ini_set('error_log', sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
+        $unique = uniqid();
+        ini_set('error_log', $this->getFilename($unique));
 
         $log = new Logger();
         $log->addErrorLogHandler();
@@ -29,18 +28,37 @@ class LoggerTest extends TestCase
 
         $log->getMonolog()->info('test how simple logger wrapper works');
 
-        $string = file_get_contents(sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
+        $string = file_get_contents($this->getFilename($unique));
         $this->assertStringEndsWith('App.INFO: test how simple logger wrapper works', trim($string));
     }
 
-    public function testHowWorksStaticMethod()
+    public function testHowWorksStaticMethods()
     {
-        ini_set('error_log', sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
+        $unique = uniqid();
+        ini_set('error_log', $this->getFilename($unique));
 
         $log = Logger::default();
-        $log->info('test how simple logger wrapper works');
+        $log->info('log 1');
 
-        $string = file_get_contents(sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
-        $this->assertStringEndsWith('App.INFO: test how simple logger wrapper works', trim($string));
+        $log = Logger::new();
+        $log->register();
+
+        $log->getMonolog()->info('log 2');
+
+        $string = file_get_contents($this->getFilename($unique));
+
+        $matches = [];
+        preg_match_all('/log\s(\d{1})/i', $string, $matches);
+
+        $this->assertCount(2, $matches[0]);
+    }
+
+    /**
+     * @param string $unique
+     * @return string
+     */
+    private function getFilename(string $unique): string
+    {
+        return sys_get_temp_dir() . "/test_logger_error_log_$unique.txt";
     }
 }
