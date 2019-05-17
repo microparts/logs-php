@@ -34,7 +34,7 @@ composer require microparts/logs-php
 ```php
 use Microparts\Logger\Logger;
 
-$log = Logger::new(); // Psr\Log\LoggerInterface
+$log = Logger::default(); // Psr\Log\LoggerInterface
 $log->info('write something');
 ```
 
@@ -55,7 +55,7 @@ class LoggerModule implements ServiceProvider
     public function provideServices($container): void
     {
         $container->singleton(LoggerInterface::class, function () {
-            return Logger::new(); // it's all!
+            return Logger::default(); // it's all!
         });
     }
 }
