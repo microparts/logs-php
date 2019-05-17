@@ -10,6 +10,7 @@ use Psr\Log\LogLevel;
 
 final class Logger
 {
+    public const CHANNEL = 'App';
     public const FORMAT = '[%datetime%] %channel%.%level_name%: %message% %context% %extra%';
 
     /**
@@ -40,7 +41,7 @@ final class Logger
      * @param string $channel
      * @param string $level
      */
-    public function __construct(string $channel = 'App', string $level = LogLevel::INFO)
+    public function __construct(string $channel = self::CHANNEL, string $level = LogLevel::INFO)
     {
         $this->channel = $channel;
         $this->level   = $level;
@@ -53,14 +54,30 @@ final class Logger
      *
      * @param string $channel
      * @param string $level
-     * @return LoggerInterface
+     * @return Logger
      */
-    public static function new(string $channel = 'App', string $level = LogLevel::INFO): LoggerInterface
+    public static function new(string $channel = self::CHANNEL, string $level = LogLevel::INFO): Logger
     {
-        $logger = new Logger($channel, $level);
-        $logger->addErrorLogHandler();
+        $log = new Logger($channel, $level);
+        $log->addErrorLogHandler();
 
-        return $logger->register();
+        return $log;
+    }
+
+    /**
+     * Return registered default logger.
+     *
+     * @param string $channel
+     * @param string $level
+     * @return \Psr\Log\LoggerInterface
+     */
+    public static function default(string $channel = self::CHANNEL, string $level = LogLevel::INFO): LoggerInterface
+    {
+        $log = new Logger($channel, $level);
+        $log->addErrorLogHandler();
+        $log->register();
+
+        return $log->getMonolog();
     }
 
     /**
@@ -79,15 +96,13 @@ final class Logger
     /**
      * Register all handlers.
      *
-     * @return \Psr\Log\LoggerInterface
+     * @return void
      */
-    public function register(): LoggerInterface
+    public function register(): void
     {
         foreach ($this->handlers as $handler) {
             $this->monolog->pushHandler($handler($this->level));
         }
-
-        return $this->monolog;
     }
 
     /**

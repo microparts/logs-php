@@ -37,7 +37,7 @@ class LoggerTest extends TestCase
     {
         ini_set('error_log', sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
 
-        $log = Logger::new();
+        $log = Logger::default();
         $log->info('test how simple logger wrapper works');
 
         $string = file_get_contents(sys_get_temp_dir() . self::ERROR_LOG_FILENAME);
